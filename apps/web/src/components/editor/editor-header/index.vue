@@ -310,7 +310,6 @@ function copyToWeChat() {
   <AboutDialog :visible="aboutDialogVisible" @close="aboutDialogVisible = false" />
   <FundDialog :visible="fundDialogVisible" @close="fundDialogVisible = false" />
   <EditorStateDialog :visible="editorStateDialogVisible" @close="editorStateDialogVisible = false" />
-  <AIImageGeneratorPanel v-model:open="uiStore.aiImageDialogVisible" />
 </template>
 
 <style lang="less" scoped>

@@ -1,1 +1,1 @@
-export * from './ai-config'
+export {}
