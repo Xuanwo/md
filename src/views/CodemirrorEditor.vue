@@ -4,21 +4,15 @@ import { EditorView } from '@codemirror/view'
 import { highlightPendingBlocks, hljs } from '@md/core'
 import { markdownSetup, theme } from '@md/shared/editor'
 import { Eye, Pen } from 'lucide-vue-next'
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from '@/components/ui/resizable'
 import { SearchTab } from '@/components/ui/search-tab'
+import DEFAULT_CONTENT from '@/assets/example/markdown.md?raw'
 import { useCssEditorStore } from '@/stores/cssEditor'
 import { useEditorStore } from '@/stores/editor'
-import { usePostStore } from '@/stores/post'
 import { useRenderStore } from '@/stores/render'
 import { useThemeStore } from '@/stores/theme'
 import { useUIStore } from '@/stores/ui'
 
 const editorStore = useEditorStore()
-const postStore = usePostStore()
 const renderStore = useRenderStore()
 const themeStore = useThemeStore()
 const uiStore = useUIStore()
@@ -27,12 +21,10 @@ const cssEditorStore = useCssEditorStore()
 const { editor } = storeToRefs(editorStore)
 const { output } = storeToRefs(renderStore)
 const { isDark } = storeToRefs(uiStore)
-const { posts, currentPostIndex } = storeToRefs(postStore)
 const { previewWidth } = storeToRefs(themeStore)
 const {
   isMobile,
   isEditOnLeft,
-  isOpenPostSlider,
   isOpenRightSlider,
   isOpenConfirmDialog,
 } = storeToRefs(uiStore)
@@ -285,7 +277,7 @@ const editorRef = useTemplateRef<HTMLDivElement>(`editorRef`)
 function createFormTextArea(dom: HTMLDivElement) {
   // 创建编辑器状态
   const state = EditorState.create({
-    doc: posts.value[currentPostIndex.value].content,
+    doc: DEFAULT_CONTENT,
     extensions: [
       markdownSetup({
         onSearch: openSearchWithSelection,
@@ -294,18 +286,9 @@ function createFormTextArea(dom: HTMLDivElement) {
       themeCompartment.of(theme(isDark.value)),
       EditorView.updateListener.of((update) => {
         if (update.docChanged) {
-          const value = update.state.doc.toString()
           clearTimeout(changeTimer.value)
           changeTimer.value = setTimeout(() => {
             editorRefresh()
-
-            const currentPost = posts.value[currentPostIndex.value]
-            if (value === currentPost.content) {
-              return
-            }
-
-            currentPost.updateDatetime = new Date()
-            currentPost.content = value
           }, 300)
         }
       }),
@@ -358,59 +341,9 @@ watch(isDark, () => {
   }
 })
 
-// 监听当前文章切换，更新编辑器内容
-watch(currentPostIndex, () => {
-  if (!codeMirrorView.value)
-    return
-
-  const currentPost = posts.value[currentPostIndex.value]
-  if (!currentPost)
-    return
-
-  const currentContent = codeMirrorView.value.state.doc.toString()
-
-  // 只有当内容不同时才更新，避免不必要的更新
-  if (currentContent !== currentPost.content) {
-    codeMirrorView.value.dispatch({
-      changes: {
-        from: 0,
-        to: codeMirrorView.value.state.doc.length,
-        insert: currentPost.content,
-      },
-    })
-
-    // 更新编辑器后刷新渲染
-    editorRefresh()
-  }
-})
-
-// 历史记录的定时器
-const historyTimer = ref<ReturnType<typeof setTimeout>>()
-onMounted(() => {
-  // 定时，30 秒记录一次文章的历史记录
-  historyTimer.value = setInterval(() => {
-    const currentPost = posts.value[currentPostIndex.value]
-
-    // 与最后一篇记录对比
-    const pre = (currentPost.history || [])[0]?.content
-    if (pre === currentPost.content) {
-      return
-    }
-
-    currentPost.history ??= []
-    currentPost.history.unshift({
-      content: currentPost.content,
-      datetime: new Date().toLocaleString(`zh-CN`),
-    })
-
-    currentPost.history.length = Math.min(currentPost.history.length, 10)
-  }, 30 * 1000)
-})
-
 // 销毁时清理定时器和全局事件监听器
 onUnmounted(() => {
   // 清理定时器 - 防止回调访问已销毁的DOM
-  clearTimeout(historyTimer.value)
   clearTimeout(timeout.value)
   clearTimeout(changeTimer.value)
 
@@ -430,78 +363,68 @@ onUnmounted(() => {
       <div
         class="container-main-section border-radius-10 relative flex flex-1 overflow-hidden border"
       >
-        <ResizablePanelGroup direction="horizontal">
-          <ResizablePanel
-            :default-size="15"
-            :max-size="isOpenPostSlider ? 20 : 0"
-            :min-size="isOpenPostSlider ? 10 : 0"
+        <div class="flex flex-1">
+          <div
+            v-show="!isMobile || (isMobile && showEditor)"
+            class="codeMirror-wrapper relative flex-1"
+            :class="{
+              'order-1 border-l': !isEditOnLeft,
+              'border-r': isEditOnLeft,
+            }"
           >
-            <PostSlider />
-          </ResizablePanel>
-          <ResizableHandle class="hidden md:block" />
-              <ResizablePanel class="flex">
-            <div
-              v-show="!isMobile || (isMobile && showEditor)"
-              class="codeMirror-wrapper relative flex-1"
-              :class="{
-                'order-1 border-l': !isEditOnLeft,
-                'border-r': isEditOnLeft,
-              }"
-            >
-              <SearchTab v-if="codeMirrorView" ref="searchTabRef" :editor-view="codeMirrorView as any" />
+            <SearchTab v-if="codeMirrorView" ref="searchTabRef" :editor-view="codeMirrorView as any" />
 
-              <EditorContextMenu>
-                <div
-                  id="editor"
-                  ref="editorRef"
-                  class="codemirror-container"
-                />
-              </EditorContextMenu>
-            </div>
+            <EditorContextMenu>
+              <div
+                id="editor"
+                ref="editorRef"
+                class="codemirror-container"
+              />
+            </EditorContextMenu>
+          </div>
+          <div
+            v-show="!isMobile || (isMobile && !showEditor)"
+            class="relative flex-1 overflow-x-hidden transition-width"
+            :class="[isOpenRightSlider ? 'w-0' : 'w-100']"
+          >
             <div
-              v-show="!isMobile || (isMobile && !showEditor)"
-              class="relative flex-1 overflow-x-hidden transition-width"
-              :class="[isOpenRightSlider ? 'w-0' : 'w-100']"
+              id="preview"
+              ref="previewRef"
+              class="preview-wrapper w-full p-5 flex justify-center"
             >
               <div
-                id="preview"
-                ref="previewRef"
-                class="preview-wrapper w-full p-5 flex justify-center"
+                id="output-wrapper"
+                class="w-full max-w-full"
+                :class="{ output_night: !backLight }"
               >
                 <div
-                  id="output-wrapper"
-                  class="w-full max-w-full"
-                  :class="{ output_night: !backLight }"
+                  class="preview border-x shadow-xl mx-auto"
+                  :class="[
+                    isMobile ? 'w-full' : previewWidth,
+                    themeStore.previewWidth === 'w-[375px]' ? 'max-w-full' : '',
+                  ]"
                 >
-                  <div
-                    class="preview border-x shadow-xl mx-auto"
-                    :class="[
-                      isMobile ? 'w-full' : previewWidth,
-                      themeStore.previewWidth === 'w-[375px]' ? 'max-w-full' : '',
-                    ]"
-                  >
-                    <section id="output" class="w-full" v-html="output" />
-                    <div v-if="isCoping" class="loading-mask">
-                      <div class="loading-mask-box">
-                        <div class="loading__img" />
-                        <span>正在生成</span>
-                      </div>
+                  <section id="output" class="w-full" v-html="output" />
+                  <div v-if="isCoping" class="loading-mask">
+                    <div class="loading-mask-box">
+                      <div class="loading__img" />
+                      <span>正在生成</span>
                     </div>
                   </div>
                 </div>
-                <BackTop
-                  target="preview"
-                  :right="isMobile ? 24 : 20"
-                  :bottom="isMobile ? 90 : 20"
-                />
               </div>
-
-              <FloatingToc />
+              <BackTop
+                target="preview"
+                :right="isMobile ? 24 : 20"
+                :bottom="isMobile ? 90 : 20"
+              />
             </div>
-            <CssEditor />
-            <RightSlider />
-          </ResizablePanel>
-        </ResizablePanelGroup>
+
+            <FloatingToc />
+          </div>
+          <CssEditor />
+          <RightSlider />
+        </div>
       </div>
 
       <!-- 移动端浮动按钮组 -->
@@ -519,10 +442,6 @@ onUnmounted(() => {
       <!-- AI工具箱已移到侧边栏，这里不再显示 -->
 
       <InsertFormDialog />
-
-      <InsertMpCardDialog />
-
-      <TemplateDialog />
 
       <AlertDialog v-model:open="isOpenConfirmDialog">
         <AlertDialogContent>

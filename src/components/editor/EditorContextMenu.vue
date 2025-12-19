@@ -3,18 +3,15 @@ import { altSign, ctrlSign, shiftSign } from '@md/shared/configs'
 import DEFAULT_CONTENT from '@/assets/example/markdown.md?raw'
 import { useEditorStore } from '@/stores/editor'
 import { useExportStore } from '@/stores/export'
-import { usePostStore } from '@/stores/post'
 import { useUIStore } from '@/stores/ui'
 import { copyPlain } from '@/utils/clipboard'
 
 const editorStore = useEditorStore()
-const postStore = usePostStore()
 const exportStore = useExportStore()
 const uiStore = useUIStore()
 
 const {
   toggleShowInsertFormDialog,
-  toggleShowInsertMpCardDialog,
 } = uiStore
 
 const importMarkdownContent = useImportMarkdownContent()
@@ -22,9 +19,7 @@ const importMarkdownContent = useImportMarkdownContent()
 // 格式化文档
 async function formatContent() {
   const doc = await editorStore.formatContent()
-  if (doc && postStore.currentPost) {
-    postStore.updatePostContent(postStore.currentPostId, doc)
-  }
+  return doc
 }
 
 // 导入默认内容
@@ -82,12 +77,6 @@ function downloadAsCardImage() {
     <ContextMenuContent class="w-64">
       <ContextMenuItem inset @click="toggleShowInsertFormDialog()">
         插入表格
-      </ContextMenuItem>
-      <ContextMenuItem
-        inset
-        @click="toggleShowInsertMpCardDialog()"
-      >
-        插入公众号名片
       </ContextMenuItem>
       <ContextMenuItem inset @click="resetStyleConfirm()">
         重置样式

@@ -18,9 +18,6 @@ export const useUIStore = defineStore(`ui`, () => {
   // 是否打开右侧滑块
   const isOpenRightSlider = store.reactive(addPrefix(`is_open_right_slider`), false)
 
-  // 是否打开文章列表滑块
-  const isOpenPostSlider = store.reactive(addPrefix(`is_open_post_slider`), false)
-
   // 是否为移动端
   const isMobile = store.reactive(`isMobile`, false)
 
@@ -40,14 +37,6 @@ export const useUIStore = defineStore(`ui`, () => {
   // 是否展示插入表格对话框
   const isShowInsertFormDialog = ref(false)
   const toggleShowInsertFormDialog = useToggle(isShowInsertFormDialog)
-
-  // 是否展示插入公众号名片对话框
-  const isShowInsertMpCardDialog = ref(false)
-  const toggleShowInsertMpCardDialog = useToggle(isShowInsertMpCardDialog)
-
-  // 是否展示模板管理对话框
-  const isShowTemplateDialog = ref(false)
-  const toggleShowTemplateDialog = useToggle(isShowTemplateDialog)
 
   // 是否打开重置样式确认对话框
   const isOpenConfirmDialog = ref(false)
@@ -83,7 +72,6 @@ export const useUIStore = defineStore(`ui`, () => {
     isDark,
     isEditOnLeft,
     isOpenRightSlider,
-    isOpenPostSlider,
     isMobile,
     isPinFloatingToc,
     isShowFloatingToc,
@@ -93,10 +81,6 @@ export const useUIStore = defineStore(`ui`, () => {
     toggleShowCssEditor,
     isShowInsertFormDialog,
     toggleShowInsertFormDialog,
-    isShowInsertMpCardDialog,
-    toggleShowInsertMpCardDialog,
-    isShowTemplateDialog,
-    toggleShowTemplateDialog,
     isOpenConfirmDialog,
 
     // ==================== 搜索面板 ====================

@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { Download, FileCode, FileCog, FileText, FolderKanban, Package, Upload } from 'lucide-vue-next'
+import { Download, FileCode, FileCog, FileText, Upload } from 'lucide-vue-next'
 import { useEditorStore } from '@/stores/editor'
 import { useExportStore } from '@/stores/export'
-import { useUIStore } from '@/stores/ui'
 
 const props = withDefaults(defineProps<{
   asSub?: boolean
@@ -16,19 +15,11 @@ const { asSub } = toRefs(props)
 
 const editorStore = useEditorStore()
 const exportStore = useExportStore()
-const uiStore = useUIStore()
-
-const { isOpenPostSlider } = storeToRefs(uiStore)
-const { toggleShowTemplateDialog } = uiStore
 
 const importMarkdownContent = useImportMarkdownContent()
 
 function openEditorStateDialog() {
   emit(`openEditorState`)
-}
-
-function openTemplateDialog() {
-  toggleShowTemplateDialog(true)
 }
 
 // Export functions
@@ -108,20 +99,6 @@ function exportEditorContent2PDF() {
 
       <MenubarSeparator />
 
-      <!-- 模板管理 -->
-      <MenubarItem @click="openTemplateDialog()">
-        <Package class="mr-2 size-4" />
-        模板管理
-      </MenubarItem>
-
-      <!-- 内容管理 -->
-      <MenubarItem @click="isOpenPostSlider = !isOpenPostSlider">
-        <FolderKanban class="mr-2 size-4" />
-        内容管理
-      </MenubarItem>
-
-      <MenubarSeparator />
-
       <!-- 项目配置 -->
       <MenubarItem @click="openEditorStateDialog()">
         <FileCog class="mr-2 size-4" />
@@ -181,20 +158,6 @@ function exportEditorContent2PDF() {
           </MenubarItem>
         </MenubarSubContent>
       </MenubarSub>
-
-      <MenubarSeparator />
-
-      <!-- 模板管理 -->
-      <MenubarItem @click="openTemplateDialog()">
-        <Package class="mr-2 size-4" />
-        模板管理
-      </MenubarItem>
-
-      <!-- 内容管理 -->
-      <MenubarItem @click="isOpenPostSlider = !isOpenPostSlider">
-        <FolderKanban class="mr-2 size-4" />
-        内容管理
-      </MenubarItem>
 
       <MenubarSeparator />
 

@@ -8,7 +8,7 @@ import {
   getHtmlContent,
   sanitizeTitle,
 } from '@/utils'
-import { usePostStore } from './post'
+import { useEditorStore } from './editor'
 import { useRenderStore } from './render'
 import { useUIStore } from './ui'
 
@@ -17,9 +17,18 @@ import { useUIStore } from './ui'
  * 负责处理各种导出功能：HTML、PDF、MD、图片等
  */
 export const useExportStore = defineStore(`export`, () => {
-  const postStore = usePostStore()
+  const editorStore = useEditorStore()
   const renderStore = useRenderStore()
   const uiStore = useUIStore()
+
+  function inferTitleFromMarkdown(markdown: string): string {
+    const match = markdown.match(/^#{1,6}\s+(.+?)\s*#*\s*$/m)
+    return match?.[1]?.trim() || `untitled`
+  }
+
+  function getExportTitleFromMarkdown(markdown?: string): string {
+    return inferTitleFromMarkdown(markdown ?? editorStore.getContent())
+  }
 
   // 将编辑器内容转换为 HTML
   const editorContent2HTML = () => {
@@ -30,29 +39,18 @@ export const useExportStore = defineStore(`export`, () => {
 
   // 导出编辑器内容为 HTML，并且下载到本地
   const exportEditorContent2HTML = async () => {
-    const currentPost = postStore.currentPost
-    if (!currentPost)
-      return
-
-    await exportHTML(currentPost.title)
+    const title = getExportTitleFromMarkdown()
+    await exportHTML(title)
     document.querySelector(`#output`)!.innerHTML = renderStore.output
   }
 
   // 导出编辑器内容为无样式 HTML
   const exportEditorContent2PureHTML = (content: string) => {
-    const currentPost = postStore.currentPost
-    if (!currentPost)
-      return
-
-    exportPureHTML(content, currentPost.title)
+    exportPureHTML(content, getExportTitleFromMarkdown(content))
   }
 
   // 下载卡片图片
   const downloadAsCardImage = async () => {
-    const currentPost = postStore.currentPost
-    if (!currentPost)
-      return
-
     const el = document.querySelector<HTMLElement>(`#output-wrapper>.preview`)
     if (!el)
       return
@@ -66,26 +64,20 @@ export const useExportStore = defineStore(`export`, () => {
       },
     })
 
-    downloadFile(url, `${sanitizeTitle(currentPost.title)}.png`, `image/png`)
+    const title = getExportTitleFromMarkdown()
+    downloadFile(url, `${sanitizeTitle(title)}.png`, `image/png`)
   }
 
   // 导出编辑器内容为 PDF
   const exportEditorContent2PDF = async () => {
-    const currentPost = postStore.currentPost
-    if (!currentPost)
-      return
-
-    await exportPDF(currentPost.title)
+    const title = getExportTitleFromMarkdown()
+    await exportPDF(title)
     document.querySelector(`#output`)!.innerHTML = renderStore.output
   }
 
   // 导出编辑器内容到本地（Markdown）
   const exportEditorContent2MD = (content: string) => {
-    const currentPost = postStore.currentPost
-    if (!currentPost)
-      return
-
-    downloadMD(content, currentPost.title)
+    downloadMD(content, getExportTitleFromMarkdown(content))
   }
 
   return {

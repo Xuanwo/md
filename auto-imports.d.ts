@@ -322,7 +322,4 @@ declare global {
   // @ts-ignore
   export type { CssContentConfig } from './src/stores/cssEditor'
   import('./src/stores/cssEditor')
-  // @ts-ignore
-  export type { Post } from './src/stores/post'
-  import('./src/stores/post')
 }
