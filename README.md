@@ -103,10 +103,10 @@ md-cli 支持以下命令行参数：
 
 ### 🐳 方式 2. 使用 Docker 镜像
 
-如果你是 Docker 用户，可以直接用本仓库内置的 `docker/Dockerfile` 构建镜像并启动实例。镜像会用 Nginx 提供静态文件服务。
+如果你是 Docker 用户，可以直接用本仓库内置的 `Dockerfile` 构建镜像并启动实例。镜像会用 Nginx 提供静态文件服务。
 
 ```sh
-docker build -f docker/Dockerfile -t md:local .
+docker build -f Dockerfile -t md:local .
 docker run -d -p 8080:80 md:local
 ```
 
