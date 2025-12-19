@@ -10,7 +10,6 @@ export const storeLabels: Record<string, string> = {
   isUseJustify: `使用两端对齐`,
   isOpenRightSlider: `开启右侧滑块`,
   isOpenPostSlider: `开启右侧发布滑块`,
-  showAIToolbox: `AI 工具箱状态`,
   theme: `主题`,
   fontFamily: `字体`,
   fontSize: `字体大小`,
@@ -29,6 +28,4 @@ export const storeLabels: Record<string, string> = {
   isShowCssEditor: `显示 CSS 编辑器`,
   isShowInsertFormDialog: `显示插入表单对话框`,
   isShowInsertMpCardDialog: `显示插入公众号名片对话框`,
-  aiDialogVisible: `AI 对话框可见`,
-  aiImageDialogVisible: `AI 图片生成对话框可见`,
 }

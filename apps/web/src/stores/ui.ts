@@ -15,13 +15,6 @@ export const useUIStore = defineStore(`ui`, () => {
   const isEditOnLeft = store.reactive(`isEditOnLeft`, true)
   const toggleEditOnLeft = useToggle(isEditOnLeft)
 
-  // 是否开启 AI 工具箱
-  const showAIToolbox = store.reactive(`showAIToolbox`, true)
-  const toggleAIToolbox = useToggle(showAIToolbox)
-
-  // 是否已经显示过 AI 工具箱选中文本提示
-  const hasShownAIToolboxHint = store.reactive(`hasShownAIToolboxHint`, false)
-
   // 是否打开右侧滑块
   const isOpenRightSlider = store.reactive(addPrefix(`is_open_right_slider`), false)
 
@@ -59,18 +52,6 @@ export const useUIStore = defineStore(`ui`, () => {
   // 是否打开重置样式确认对话框
   const isOpenConfirmDialog = ref(false)
 
-  // AI 对话框
-  const aiDialogVisible = ref(false)
-  const aiImageDialogVisible = ref(false)
-
-  function toggleAIDialog(value?: boolean) {
-    aiDialogVisible.value = value ?? !aiDialogVisible.value
-  }
-
-  function toggleAIImageDialog(value?: boolean) {
-    aiImageDialogVisible.value = value ?? !aiImageDialogVisible.value
-  }
-
   // 搜索面板状态
   const searchTabRequest = ref<{ word: string, showReplace: boolean } | null>(null)
 
@@ -101,8 +82,6 @@ export const useUIStore = defineStore(`ui`, () => {
     // ==================== 全局 UI 状态 ====================
     isDark,
     isEditOnLeft,
-    showAIToolbox,
-    hasShownAIToolboxHint,
     isOpenRightSlider,
     isOpenPostSlider,
     isMobile,
@@ -119,10 +98,6 @@ export const useUIStore = defineStore(`ui`, () => {
     isShowTemplateDialog,
     toggleShowTemplateDialog,
     isOpenConfirmDialog,
-    aiDialogVisible,
-    toggleAIDialog,
-    aiImageDialogVisible,
-    toggleAIImageDialog,
 
     // ==================== 搜索面板 ====================
     searchTabRequest,
@@ -132,7 +107,6 @@ export const useUIStore = defineStore(`ui`, () => {
     // ==================== Actions ====================
     toggleDark,
     toggleEditOnLeft,
-    toggleAIToolbox,
     togglePinFloatingToc,
     toggleShowFloatingToc,
   }

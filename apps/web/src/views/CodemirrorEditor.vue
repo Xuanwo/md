@@ -4,7 +4,6 @@ import { EditorView } from '@codemirror/view'
 import { highlightPendingBlocks, hljs } from '@md/core'
 import { markdownSetup, theme } from '@md/shared/editor'
 import { Eye, Pen } from 'lucide-vue-next'
-import { SidebarAIToolbar } from '@/components/ai'
 import {
   ResizableHandle,
   ResizablePanel,
@@ -101,8 +100,6 @@ const showEditor = ref(true)
 function toggleView() {
   showEditor.value = !showEditor.value
 }
-
-// AI 工具箱已移到侧边栏
 
 const previewRef = useTemplateRef<HTMLDivElement>(`previewRef`)
 
@@ -348,7 +345,6 @@ onMounted(() => {
     const editorView = createFormTextArea(editorDom)
     editor.value = editorView
 
-    // AI 工具箱已移到侧边栏，不再需要初始化编辑器事件
     editorRefresh()
   })
 })
@@ -453,10 +449,6 @@ onUnmounted(() => {
               }"
             >
               <SearchTab v-if="codeMirrorView" ref="searchTabRef" :editor-view="codeMirrorView as any" />
-              <SidebarAIToolbar
-                :is-mobile="isMobile"
-                :show-editor="showEditor"
-              />
 
               <EditorContextMenu>
                 <div

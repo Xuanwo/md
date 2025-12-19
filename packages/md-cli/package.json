@@ -2,7 +2,7 @@
   "name": "@doocs/md-cli",
   "version": "2.1.3",
   "type": "module",
-  "description": "WeChat Markdown Editor | A minimal Markdown editor with theming, content management, and AI assistant features.",
+  "description": "WeChat Markdown Editor | A minimal Markdown editor with theming and content management.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
