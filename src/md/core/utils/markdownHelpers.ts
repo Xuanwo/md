@@ -1,5 +1,5 @@
 import type { RendererAPI } from '@md/shared/types'
-import type { ReadTimeResults } from 'reading-time'
+import type { ReadTimeResults } from '@md/shared/utils/readingTime'
 import DOMPurify from 'isomorphic-dompurify'
 import { marked } from 'marked'
 

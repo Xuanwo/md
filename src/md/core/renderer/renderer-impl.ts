@@ -1,10 +1,10 @@
 import type { IOpts, RendererAPI } from '@md/shared/types'
+import type { ReadTimeResults } from '@md/shared/utils/readingTime'
 import type { RendererObject, Tokens } from 'marked'
-import type { ReadTimeResults } from 'reading-time'
 import frontMatter from 'front-matter'
 import hljs from 'highlight.js/lib/core'
 import { marked } from 'marked'
-import readingTime from 'reading-time'
+import { estimateReadingTime } from '@md/shared/utils/readingTime'
 import { markedAlert, markedFootnotes, markedMarkup, markedPlantUML, markedRuby, markedSlider, markedToc, MDKatex } from '../extensions'
 import { COMMON_LANGUAGES, highlightAndFormatCode } from '../utils/languages'
 
@@ -91,7 +91,7 @@ function parseFrontMatterAndContent(markdownText: string): ParseResult {
     const yamlData = parsed.attributes
     const markdownContent = parsed.body
 
-    const readingTimeResult = readingTime(markdownContent)
+    const readingTimeResult = estimateReadingTime(markdownContent)
 
     return {
       yamlData: yamlData as Record<string, any>,
@@ -104,7 +104,7 @@ function parseFrontMatterAndContent(markdownText: string): ParseResult {
     return {
       yamlData: {},
       markdownContent: markdownText,
-      readingTime: readingTime(markdownText),
+      readingTime: estimateReadingTime(markdownText),
     }
   }
 }

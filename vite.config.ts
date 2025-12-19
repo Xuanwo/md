@@ -7,7 +7,6 @@ import { visualizer } from 'rollup-plugin-visualizer'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { defineConfig, loadEnv } from 'vite'
-import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
 export default defineConfig(({ mode }) => {
@@ -15,20 +14,12 @@ export default defineConfig(({ mode }) => {
 
   return {
     base: `/`,
-    define: { process },
     envPrefix: [`VITE_`],
     plugins: [
       vue(),
       tailwindcss(),
       vueDevTools({
         launchEditor: env.VITE_LAUNCH_EDITOR ?? `code`,
-      }),
-      nodePolyfills({
-        include: [`path`, `util`, `timers`, `stream`, `fs`],
-        overrides: {
-        // Since `fs` is not supported in browsers, we can use the `memfs` package to polyfill it.
-        // fs: 'memfs',
-        },
       }),
       ...(process.env.ANALYZE === `true` ? [visualizer({ emitFile: true, filename: `stats.html` }) as any] : []),
       AutoImport({
