@@ -3,7 +3,7 @@
   "type": "module",
   "version": "2.1.0",
   "private": true,
-  "description": "WeChat Markdown Editor | A minimal Markdown editor with theming and content management.",
+  "description": "WeChat Markdown Editor | A minimal Markdown editor with theming.",
   "homepage": "https://github.com/Xuanwo/md",
   "repository": {
     "type": "git",

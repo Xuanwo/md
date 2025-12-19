@@ -46,16 +46,11 @@ function editorRefresh() {
 
 // 对话框状态
 const aboutDialogVisible = ref(false)
-const fundDialogVisible = ref(false)
 const editorStateDialogVisible = ref(false)
 
 // 处理帮助菜单事件
 function handleOpenAbout() {
   aboutDialogVisible.value = true
-}
-
-function handleOpenFund() {
-  fundDialogVisible.value = true
 }
 
 function handleOpenEditorState() {
@@ -252,7 +247,7 @@ function copyToWeChat() {
         <InsertDropdown />
         <StyleDropdown />
         <ViewDropdown />
-        <HelpDropdown @open-about="handleOpenAbout" @open-fund="handleOpenFund" />
+        <HelpDropdown @open-about="handleOpenAbout" />
       </Menubar>
     </div>
 
@@ -272,7 +267,7 @@ function copyToWeChat() {
             <InsertDropdown :as-sub="true" />
             <StyleDropdown :as-sub="true" />
             <ViewDropdown :as-sub="true" />
-            <HelpDropdown :as-sub="true" @open-about="handleOpenAbout" @open-fund="handleOpenFund" />
+            <HelpDropdown :as-sub="true" @open-about="handleOpenAbout" />
           </MenubarContent>
         </MenubarMenu>
       </Menubar>
@@ -290,9 +285,6 @@ function copyToWeChat() {
         <span>复制</span>
       </Button>
 
-      <!-- 文章信息（移动端隐藏） -->
-      <PostInfo class="hidden md:inline-flex" />
-
       <!-- 样式面板 -->
       <Button
         variant="outline"
@@ -308,7 +300,6 @@ function copyToWeChat() {
 
   <!-- 对话框组件，嵌套菜单无法正常挂载，需要提取层级 -->
   <AboutDialog :visible="aboutDialogVisible" @close="aboutDialogVisible = false" />
-  <FundDialog :visible="fundDialogVisible" @close="fundDialogVisible = false" />
   <EditorStateDialog :visible="editorStateDialogVisible" @close="editorStateDialogVisible = false" />
 </template>
 

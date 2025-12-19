@@ -2,7 +2,6 @@
 import { storeLabels } from '@md/shared/configs'
 import { Expand, UploadCloud } from 'lucide-vue-next'
 import { useCssEditorStore } from '@/stores/cssEditor'
-import { usePostStore } from '@/stores/post'
 import { useRenderStore } from '@/stores/render'
 import { useThemeStore } from '@/stores/theme'
 import { useUIStore } from '@/stores/ui'
@@ -18,7 +17,6 @@ const props = defineProps({
 const emit = defineEmits([`close`])
 const themeStore = useThemeStore()
 const uiStore = useUIStore()
-const postStore = usePostStore()
 const cssEditorStore = useCssEditorStore()
 const renderStore = useRenderStore()
 
@@ -64,7 +62,6 @@ function getAllStoreStates() {
     isDark: uiStore.isDark,
     isEditOnLeft: uiStore.isEditOnLeft,
     isOpenRightSlider: uiStore.isOpenRightSlider,
-    isOpenPostSlider: uiStore.isOpenPostSlider,
 
     // Theme store 的状态
     theme: themeStore.theme,
@@ -80,11 +77,6 @@ function getAllStoreStates() {
     isUseIndent: themeStore.isUseIndent,
     isUseJustify: themeStore.isUseJustify,
 
-    // Post store 的状态
-    currentPostId: postStore.currentPostId,
-    currentPostIndex: postStore.currentPostIndex,
-    posts: postStore.posts,
-
     // CSS Editor store 的状态
     cssContentConfig: cssEditorStore.cssContentConfig,
 
@@ -95,7 +87,6 @@ function getAllStoreStates() {
     // Display store 的状态
     isShowCssEditor: uiStore.isShowCssEditor,
     isShowInsertFormDialog: uiStore.isShowInsertFormDialog,
-    isShowInsertMpCardDialog: uiStore.isShowInsertMpCardDialog,
   }
 }
 
@@ -252,8 +243,6 @@ function applyImportedConfig() {
         uiStore.isEditOnLeft = value
       else if (key === `isOpenRightSlider`)
         uiStore.isOpenRightSlider = value
-      else if (key === `isOpenPostSlider`)
-        uiStore.isOpenPostSlider = value
 
       // Theme store 的状态
       else if (key === `theme`)
@@ -281,14 +270,6 @@ function applyImportedConfig() {
       else if (key === `isUseJustify`)
         themeStore.isUseJustify = value
 
-      // Post store 的状态
-      else if (key === `currentPostId`)
-        postStore.currentPostId = value
-      else if (key === `currentPostIndex`)
-        postStore.currentPostIndex = value
-      else if (key === `posts`)
-        postStore.posts = value
-
       // CSS Editor store 的状态
       else if (key === `cssContentConfig`)
         cssEditorStore.cssContentConfig = value
@@ -304,8 +285,6 @@ function applyImportedConfig() {
         uiStore.isShowCssEditor = value
       else if (key === `isShowInsertFormDialog`)
         uiStore.isShowInsertFormDialog = value
-      else if (key === `isShowInsertMpCardDialog`)
-        uiStore.isShowInsertMpCardDialog = value
     }
   })
 

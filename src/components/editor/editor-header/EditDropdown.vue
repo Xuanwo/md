@@ -12,7 +12,6 @@ import {
   WandSparkles,
 } from 'lucide-vue-next'
 import { useEditorStore } from '@/stores/editor'
-import { usePostStore } from '@/stores/post'
 import { useUIStore } from '@/stores/ui'
 import { copyPlain } from '@/utils/clipboard'
 
@@ -27,17 +26,13 @@ const emit = defineEmits(['copy'])
 const { asSub } = toRefs(props)
 
 const editorStore = useEditorStore()
-const postStore = usePostStore()
 const uiStore = useUIStore()
 
 const { editor } = storeToRefs(editorStore)
 
 // Format content function
 async function formatContent() {
-  const doc = await editorStore.formatContent()
-  if (doc && postStore.currentPost) {
-    postStore.updatePostContent(postStore.currentPostId, doc)
-  }
+  await editorStore.formatContent()
 }
 
 // Clipboard operations

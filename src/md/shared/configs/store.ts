@@ -9,7 +9,6 @@ export const storeLabels: Record<string, string> = {
   isUseIndent: `使用缩进`,
   isUseJustify: `使用两端对齐`,
   isOpenRightSlider: `开启右侧滑块`,
-  isOpenPostSlider: `开启右侧发布滑块`,
   theme: `主题`,
   fontFamily: `字体`,
   fontSize: `字体大小`,
@@ -17,9 +16,6 @@ export const storeLabels: Record<string, string> = {
   codeBlockTheme: `代码块主题`,
   legend: `图注格式`,
   fontSizeNumber: `字体大小`,
-  currentPostId: `当前文章 ID`,
-  currentPostIndex: `当前文章索引`,
-  posts: `内容列表`,
   cssContentConfig: `自定义 CSS`,
   titleList: `文章标题列表`,
   readingTime: `阅读时间`,
@@ -27,5 +23,4 @@ export const storeLabels: Record<string, string> = {
   // Display store states
   isShowCssEditor: `显示 CSS 编辑器`,
   isShowInsertFormDialog: `显示插入表单对话框`,
-  isShowInsertMpCardDialog: `显示插入公众号名片对话框`,
 }
