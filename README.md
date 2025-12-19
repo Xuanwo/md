@@ -25,16 +25,6 @@
 
 - ✅ **文件管理** - 便捷的文件导入、导出功能，提升工作效率
 
-## 🎬 产品演示
-
-<div align="center">
-
-|                                      🎨 主题切换                                      |                                      📝 样式扩展                                      |
-| :-----------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------: |
-| ![demo1](https://cdn-doocs.oss-cn-shenzhen.aliyuncs.com/gh/doocs/md/images/demo1.gif) | ![demo3](https://cdn-doocs.oss-cn-shenzhen.aliyuncs.com/gh/doocs/md/images/demo3.gif) |
-
-</div>
-
 ## 🛠️ 开发与部署
 
 ```sh
@@ -45,63 +35,14 @@ nvm i && nvm use
 pnpm i
 
 # 启动开发模式
-pnpm web dev
-# 访问 http://localhost:5173/md/
+pnpm dev
+# 访问 http://localhost:5173/
 
-# 部署在 /md 目录
-pnpm web build
-
-# 部署在根目录
-pnpm web build:h5-netlify
-
-# Chrome 插件启动及调试
-pnpm web ext:dev
-# 访问 chrome://extensions/ 打开开发者模式，加载已解压的扩展程序，选择 apps/web/.output/chrome-mv3-dev 目录
-
-# Chrome 插件打包
-pnpm web ext:zip
-
-# Firefox 扩展打包(how to build Firefox addon)
-pnpm web firefox:zip # output zip file at in apps/web/.output/md-{version}-firefox.zip
-
-# uTools 插件打包
-pnpm utools:package # output zip file at apps/utools/release/md-utools-v{version}.zip
-
-# cloudflare workers
-pnpm web wrangler:dev # cloudflare workers dev 模式
-pnpm web wrangler:deploy # cloudflare workers 部署命令
+# 构建静态资源（产物在 dist）
+pnpm build
 ```
 
-## 🚀 快速搭建私有服务
-
-### 📦 方式 1. 使用 npm cli
-
-通过我们的 npm cli 你可以轻易搭建属于自己的微信 Markdown 编辑器。
-
-```sh
-# 安装
-npm i -g @doocs/md-cli
-
-# 启动
-md-cli
-
-# 访问
-open http://127.0.0.1:8800
-
-# 启动并指定端口
-md-cli port=8899
-
-# 访问
-open http://127.0.0.1:8899
-```
-
-md-cli 支持以下命令行参数：
-
-- `port` 指定端口号，默认 8800，如果被占用会随机使用一个新端口。
-- `spaceId` dcloud 服务空间配置
-- `clientSecret` dcloud 服务空间配置
-
-### 🐳 方式 2. 使用 Docker 镜像
+## 🐳 Docker 部署
 
 如果你是 Docker 用户，可以直接用本仓库内置的 `Dockerfile` 构建镜像并启动实例。镜像会用 Nginx 提供静态文件服务。
 
@@ -111,34 +52,3 @@ docker run -d -p 8080:80 md:local
 ```
 
 容器运行起来之后，打开浏览器，访问 http://localhost:8080 即可。
-
-## 👥 谁在使用
-
-请查看 [📋 USERS.md](USERS.md) 文件，了解使用本项目的公众号。
-
-## 🤝 贡献指南
-
-我们欢迎任何形式的贡献！请查看 [📖 CONTRIBUTING.md](./CONTRIBUTING.md) 获取提交 PR、Issue 的流程与规范。
-
-## ☕ 支持我们
-
-如果本项目对你有所帮助，可以通过以下方式支持我们的持续开发。
-
-<table style="margin: 0 auto">
-  <tbody>
-    <tr>
-      <td align="center" style="width: 260px">
-        <img
-          src="https://cdn-doocs.oss-cn-shenzhen.aliyuncs.com/gh/doocs/md/images/support1.jpg"
-          style="width: 200px"
-        /><br />
-      </td>
-      <td align="center" style="width: 260px">
-        <img
-          src="https://cdn-doocs.oss-cn-shenzhen.aliyuncs.com/gh/doocs/md/images/support2.jpg"
-          style="width: 200px"
-        /><br />
-      </td>
-    </tr>
-  </tbody>
-</table>
