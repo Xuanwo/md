@@ -16,85 +16,34 @@
       href="https://cdn-doocs.oss-cn-shenzhen.aliyuncs.com/gh/doocs/md/images/1648303220922-7e14aefa-816e-44c1-8604-ade709ca1c69.png"
     />
     <style>
-      .loading {
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 99999;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 100vw;
-        height: 100vh;
-        font-size: 18px;
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #ffffff;
       }
 
-      .loading::before {
-        content: url('/src/assets/images/favicon.png');
-        width: 100px;
-        height: 100px;
-        margin-bottom: 26px;
-      }
-
-      .loading.dark {
-        color: #ffffff;
+      html.dark,
+      html.dark body {
         background-color: #141414;
       }
-
-      .loading .txt {
-        position: absolute;
-        bottom: 10%;
-      }
-
-      .loading .txt::after {
-        content: '...';
-        animation: dots 1.5s steps(4, end) infinite;
-      }
-
-      @keyframes dots {
-        0% {
-          content: ' ';
-        }
-        25% {
-          content: '.';
-        }
-        50% {
-          content: '..';
-        }
-        75% {
-          content: '...';
-        }
-      }
     </style>
+    <script>
+      ;(() => {
+        const theme = localStorage.getItem('vueuse-color-scheme')
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (theme === 'dark' || (theme === 'auto' && prefersDark)) {
+          document.documentElement.classList.add('dark')
+        }
+      })()
+    </script>
   </head>
 
   <body>
     <noscript>
       <strong>Please enable JavaScript to continue.</strong>
     </noscript>
-    <div id="app">
-      <div class="loading">
-        <strong>致力于让 Markdown 编辑更简单</strong>
-        <p class="txt">正在加载编辑器</p>
-        <p class="timeout-tip" style="display: none; color: #e53935; font-size: 16px; margin-top: 2em">
-          加载时间过长，请尝试刷新页面或按 F12 查看控制台是否有异常信息
-        </p>
-      </div>
-    </div>
-    <script>
-      const theme = localStorage.getItem('vueuse-color-scheme')
-      if (theme === 'dark' || (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.querySelector('.loading').classList.add('dark')
-      }
-
-      setTimeout(() => {
-        const tip = document.querySelector('.loading .timeout-tip')
-        if (tip) {
-          tip.style.display = 'block'
-        }
-      }, 30000)
-    </script>
+    <div id="app"></div>
     <script>
       window.MathJax = {
         tex: { tags: 'ams' },

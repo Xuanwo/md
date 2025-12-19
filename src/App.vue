@@ -8,7 +8,6 @@ const { isDark } = storeToRefs(uiStore)
 </script>
 
 <template>
-  <AppSplash />
   <CodemirrorEditor />
   <Toaster
     rich-colors
