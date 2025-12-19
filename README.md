@@ -12,8 +12,6 @@
 
 - ✅ **完整 Markdown 支持** - 支持所有基础语法、数学公式
 - ✅ **图表渲染** - 支持 Mermaid 图表和 [GFM 警告块](https://github.com/orgs/community/discussions/16925)
-- ✅ **PlantUML 支持** - 强大的 UML 图表渲染
-- ✅ **Ruby 注音扩展** - 支持 `[文字]{注音}`、`[文字]^(注音)` 格式，支持多种分隔符
 
 ### 🎯 编辑体验
 

@@ -5,7 +5,7 @@ import frontMatter from 'front-matter'
 import hljs from 'highlight.js/lib/core'
 import { marked } from 'marked'
 import { estimateReadingTime } from '@md/shared/utils/readingTime'
-import { markedAlert, markedFootnotes, markedMarkup, markedPlantUML, markedRuby, markedSlider, markedToc, MDKatex } from '../extensions'
+import { markedAlert, markedFootnotes, markedMarkup, markedSlider, markedToc, MDKatex } from '../extensions'
 import { COMMON_LANGUAGES, highlightAndFormatCode } from '../utils/languages'
 
 Object.entries(COMMON_LANGUAGES).forEach(([name, lang]) => {
@@ -360,10 +360,6 @@ export function initRenderer(opts: IOpts = {}): RendererAPI {
   marked.use(markedAlert({}))
   marked.use(MDKatex({ nonStandard: true }, true))
   marked.use(markedFootnotes())
-  marked.use(markedPlantUML({
-    inlineSvg: true, // 启用SVG内嵌，适用于微信公众号
-  }))
-  marked.use(markedRuby())
 
   return {
     buildAddition,
