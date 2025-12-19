@@ -31,17 +31,12 @@
 
 ```shell
 - apps
-  - web           # 网页及浏览器插件
-  - vscode        # VSCode 插件
-- packages
-  - config        # 项目级别配置
-  - core          # 核心 markdown 渲染器
-  - shared        # 共享的配置、常量、类型和工具函数
-  - example       # 公众号 openapi 接口代理服务示例
-  - md-cli        # 命令行工具
+  - web           # Web app (Vite)
+    - src/md/core   # Markdown renderer
+    - src/md/shared # Shared configs/utils/types
 ```
 
-以开发 `@md/web` 为例：
+以开发 Web app 为例：
 
 ```bash
 # 1. Fork 本仓库并克隆
@@ -55,7 +50,7 @@ git remote add upstream https://github.com/doocs/md.git
 pnpm install
 
 # 4. 启动本地开发
-pnpm web dev
+pnpm dev
 ```
 
 ## 开发流程
@@ -93,7 +88,7 @@ pnpm web dev
 6. 在 GitHub 页面发起 **Pull Request**。
 
 > [!TIP]
-> 开发时可在 `apps/web` 目录下新建 `.env.local` 文件，配置 `VITE_LAUNCH_EDITOR` 为 `code` （默认值）或其他 [支持的编辑器](https://github.com/yyx990803/launch-editor?tab=readme-ov-file#supported-editors)，方便调试。
+> 开发时可在仓库根目录下新建 `.env.local` 文件，配置 `VITE_LAUNCH_EDITOR` 为 `code` （默认值）或其他 [支持的编辑器](https://github.com/yyx990803/launch-editor?tab=readme-ov-file#supported-editors)，方便调试。
 >
 > 例如：
 >

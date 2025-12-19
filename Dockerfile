@@ -10,9 +10,8 @@ COPY . .
 
 RUN pnpm install --frozen-lockfile
 
-ENV SERVER_ENV=NETLIFY
-RUN pnpm --filter @md/web build:h5-netlify:only
+RUN pnpm build
 
 FROM nginx:alpine
 
-COPY --from=builder /app/apps/web/dist /usr/share/nginx/html
+COPY --from=builder /app/dist /usr/share/nginx/html
