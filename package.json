@@ -38,9 +38,7 @@
     "@fsegurai/codemirror-theme-vscode-dark": "^6.2.3",
     "@fsegurai/codemirror-theme-vscode-light": "^6.2.3",
     "@replit/codemirror-indentation-markers": "^6.5.3",
-    "@vee-validate/yup": "^4.15.1",
     "@vueuse/core": "^14.1.0",
-    "axios": "^1.13.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "es-toolkit": "^1.42.0",
@@ -58,12 +56,9 @@
     "reka-ui": "^2.6.1",
     "tailwind-merge": "^3.4.0",
     "tailwindcss-animate": "^1.0.7",
-    "uuid": "^13.0.0",
-    "vee-validate": "^4.15.1",
     "vue": "^3.5.25",
     "vue-pick-colors": "^1.8.0",
-    "vue-sonner": "^2.0.9",
-    "yup": "^1.7.1"
+    "vue-sonner": "^2.0.9"
   },
   "devDependencies": {
     "@antfu/eslint-config": "6.6.1",
